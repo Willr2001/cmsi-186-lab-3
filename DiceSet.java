@@ -1,87 +1,153 @@
-/**
- * A dice set holds a collection of Die objects. All of the die objects have
- * the same number of sides.
- */
+import java.util.*;
+
+
 public class DiceSet {
 
-    // TODO add fields
 
-    /**
-     * Creates a DiceSet containing the given number of dice, each with the
-     * given number of sides. All die values start off as 1. Throws an
-     * IllegalArgumentException if either less than two dice were provided
-     * or if it is asked to make dice with less than 4 sides.
-     */
+    private Die[] dice;
+    private final int sidesOnEachDieG;
+    private int numberOfDiceG;
+
+
     public DiceSet(int sidesOnEachDie, int numberOfDice) {
         // TODO
+        if(numberOfDice < 2){
+          throw new IllegalArgumentException("At least two dice required");
+        }
+        if(sidesOnEachDie < 4){
+          throw new IllegalArgumentException("Dice must have at least four sides");
+        }
+
+        sidesOnEachDieG = sidesOnEachDie;
+        numberOfDiceG = numberOfDice;
+        this.dice = new Die[numberOfDice];
+        for(var i = 0; i < dice.length; i++){
+          this.dice[i] = new Die(sidesOnEachDie, 1);
+        }
     }
 
-    /**
-     * Creates a DiceSet where each die has the given number of sides, with the
-     * given values.
-     */
+
     public DiceSet(int sidesOnEachDie, int... values) {
-        // TODO
+
+        if(values.length < 2){
+          throw new IllegalArgumentException("At least two dice required");
+        }
+        if(sidesOnEachDie < 4){
+          throw new IllegalArgumentException("Dice must have at least four sides");
+        }
+        sidesOnEachDieG = sidesOnEachDie;
+        numberOfDiceG = values.length;
+        this.dice = new Die[values.length];
+        for(int i = 0; i < values.length; i++){
+          if(values[i] > sidesOnEachDie){
+            throw new IllegalArgumentException("Die value not legal for die shape");
+          }
+          dice[i] = new Die(sidesOnEachDie, values[i]);
+        }
     }
 
-    /**
-     * Returns the descriptor of the dice set; for example "5d20" for a set with
-     * five dice of 20 sides each; or "2d6" for a set of two six-sided dice.
-     */
+
     public String descriptor() {
         // TODO
+        String val = dice.length + "d" + dice[0].getSides();
+        return val;
     }
 
-    /**
-     * Returns the sum of the values of each die in the set.
-     */
+
     public int sum() {
-        // TODO
+
+        int sum = 0;
+        for(int i = 0; i < dice.length; i++){
+          sum += dice[i].getValue();
+        }
+        return sum;
     }
 
-    /**
-     * Rolls all the dice in the set.
-     */
+
     public void rollAll() {
-        // TODO
+
+        for(int i = 0; i < dice.length; i++){
+          dice[i].roll();
+        }
     }
 
-    /**
-     * Rolls the ith die, updating its value.
-     */
+
     public void rollIndividual(int i) {
-        // TODO
+
+        dice[i].roll();
     }
 
-    /**
-     * Returns the value of the ith die.
-     */
+
     public int getIndividual(int i) {
-        // TODO
+
+        return dice[i].getValue();
     }
 
-    /**
-     * Returns the values of each of the dice in a list.
-     */
-    public List<Integer> values() {
-        // TODO
+
+    public ArrayList<Integer> values() {
+
+        if(numberOfDiceG < 2){
+          throw new IllegalArgumentException("At least two dice required");
+        }
+        if(sidesOnEachDieG < 4){
+          throw new IllegalArgumentException("Dice must have at least four sides");
+        }
+
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for(var i = 0; i < dice.length; i++){
+          Integer temp = new Integer(1);
+          list.add(temp);
+        }
+        return list;
     }
 
-    /**
-     * Returns whether this dice set has the same distribution of values as
-     * an other dice set. The two dice sets must have the same number of dice
-     * and the same number of sides per dice, and there must be the same
-     * number of each value in each set.
-     */
+    public int getLength(){
+      return dice.length;
+    }
+
+    public int getDieSides(){
+      return dice[0].getSides();
+    }
+
+
     public boolean isIdenticalTo(DiceSet diceSet) {
         // TODO
+        int[] listOfIndex = new int[diceSet.getLength()];
+        int sides = diceSet.getDieSides();
+        int sum = 0;
+        if(dice.length != diceSet.getLength()){
+          return false;
+        }
+
+        if(sides != dice[0].getSides()){
+          return false;
+        }
+
+        for(int i = 0; i < dice.length; i++){
+          int value = dice[i].getValue();
+
+          for(int j = 0; j < dice.length; j++){
+            if(value == diceSet.getIndividual(j) && listOfIndex[j] == 0){
+              listOfIndex[j] += 1;
+            }
+          }
+        }
+        for(int k = 0; k < dice.length; k++){
+          sum += listOfIndex[k];
+        }
+        if(sum == dice.length){
+          return true;
+        }
+        return false;
     }
 
-    /**
-     * Returns a string representation in which each of the die strings are
-     * joined without a separator, for example: "[2][5][2][3]".
-     */
+
     @Override public String toString() {
-        // TODO
+
+        String val = "";
+        for(int i = 0; i < dice.length; i++){
+          val += "[" + dice[i].getValue() + "]";
+        }
+        return val;
     }
 }

@@ -64,7 +64,7 @@ public class DieTest extends TestSuite {
                 expectEqual(die.toString(), "[" + value + "]");
             }),
             new Test("Emoji is correct", () -> {
-                expectEqual(Die.SIX_SIDED_DIE_EMOJI, "🎲");
+                expectEqual(Die.SIX_SIDED_DIE_EMOJI, "D");
             }),
         };
     }
