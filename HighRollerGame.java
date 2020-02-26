@@ -12,7 +12,7 @@ public class HighRollerGame {
                 if (command.matches("h(elp)?")) {
                     showHelp();
                 } else if (command.matches("q(uit)?")) {
-                    System.out.println("I'm glad you played today. You look great!");
+                    System.out.println("I'm glad you played today. Nice shoes!");
                     break;
                 } else if (command.matches("use\\s+\\d\\d?\\s+\\d\\d?")) {
                     var tokens = command.split("\\s+");
@@ -26,8 +26,15 @@ public class HighRollerGame {
                     if (diceSet == null) {
                         throw new IllegalStateException("You don't have any dice yet");
                     }
-                    // TODO: Roll all, sum them up, and update the highest score so far
-                    // if necessary, and then print out the dice set
+                    diceSet.rollAll();
+                    int temp = diceSet.sum();
+                    if (temp > highest){
+                      highest = temp;
+
+                    }
+                    System.out.println(diceSet);
+
+
                 } else if (command.matches("roll\\s+\\d+")) {
                     if (diceSet == null) {
                         throw new IllegalStateException("You don't have any dice yet");
@@ -57,7 +64,7 @@ public class HighRollerGame {
       System.out.println("roll all        : Roll all the dice in your current dice set");
       System.out.println("roll <i>        : Roll the ith die of your current dice set");
       System.out.println("high or highest : Prints the highest roll so far");
-      
+
 
 
     }
