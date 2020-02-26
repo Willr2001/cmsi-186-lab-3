@@ -5,7 +5,7 @@ public class DiceSet {
 
 
     private Die[] dice;
-    private final int sidesOnEachDieG;
+    private final int SidesOnEachDieTemp;
     private int numberOfDiceG;
 
 
@@ -18,7 +18,7 @@ public class DiceSet {
           throw new IllegalArgumentException("Dice must have at least four sides");
         }
 
-        sidesOnEachDieG = sidesOnEachDie;
+        SidesOnEachDieTemp = sidesOnEachDie;
         numberOfDiceG = numberOfDice;
         this.dice = new Die[numberOfDice];
         for(var i = 0; i < dice.length; i++){
@@ -35,7 +35,7 @@ public class DiceSet {
         if(sidesOnEachDie < 4){
           throw new IllegalArgumentException("Dice must have at least four sides");
         }
-        sidesOnEachDieG = sidesOnEachDie;
+        SidesOnEachDieTemp = sidesOnEachDie;
         numberOfDiceG = values.length;
         this.dice = new Die[values.length];
         for(int i = 0; i < values.length; i++){
@@ -89,7 +89,7 @@ public class DiceSet {
         if(numberOfDiceG < 2){
           throw new IllegalArgumentException("At least two dice required");
         }
-        if(sidesOnEachDieG < 4){
+        if(SidesOnEachDieTemp < 4){
           throw new IllegalArgumentException("Dice must have at least four sides");
         }
 
@@ -145,7 +145,7 @@ public class DiceSet {
     @Override public String toString() {
 
         String val = "";
-        for(int i = 0; i < dice.length; i++){
+        for(var i = 0; i < dice.length; i++){
           val += "[" + dice[i].getValue() + "]";
         }
         return val;
